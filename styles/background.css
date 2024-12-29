@@ -1,0 +1,52 @@
+/* Ensures the background image covers the full page */
+.background-container {
+  background-image: url("/assets/home-bg.jpg");
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Centers the image */
+  min-height: 100vh; /* Makes the background cover the full height of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Additional styling for the header and content */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 16px;
+  z-index: 50;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+header nav ul li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  margin-right: 16px;
+}
+
+header nav ul li a:hover {
+  text-decoration: underline;
+}
