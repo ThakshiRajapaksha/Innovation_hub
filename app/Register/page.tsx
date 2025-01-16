@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const roles = [
   { value: "ADMIN", label: "Admin" },
+  { value: "STUDENT", label: "Student" },
   { value: "LAWYER", label: "Lawyer" },
   { value: "ACCOUNTANT", label: "Accountant" },
   { value: "CIVIL_ENGINEER", label: "Civil Engineer" },

@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Prisma files
+prisma/.env
+prisma/migrations
+
+# Ignore Prisma Client binary
+prisma/.client

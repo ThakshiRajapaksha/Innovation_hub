@@ -7,10 +7,6 @@ import "../../styles/background.css";
 function About() {
   const router = useRouter();
 
-  const handleSignUpClick = () => {
-    router.push("/Register");
-  };
-
   const handleLoginClick = () => {
     router.push("/Login");
   };
@@ -52,15 +48,27 @@ function About() {
 
       {/* Content Section with Background Image */}
       <div className="background-container">
-          
-            <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl">
-              <h1 className="text-2xl font-bold mb-4 text-center">About Us</h1>
-              <p className="text-black text-center">
-              To address the societal focus on traditional career paths, EcoVent proposes creating an Innovation Hub where students can bring, develop, and showcase their innovative ideas. This Hub will nurture young talent, encouraging entrepreneurial thinking in the field of renewable energy and beyond.Through the EcoVent Innovation Hub, students can break away from traditional career constraints, pursue innovative projects, and potentially become entrepreneurs in the green energy space. This initiative not only supports talent development but also strengthens EcoVent’s mission to drive sustainable change, creating a generation of empowered, purpose-driven professionals.By positioning the EcoVent Innovation Hub as a launchpad for green tech startups and a source of valuable R&D, the company can generate profit while promoting sustainable innovation and expanding its influence in the renewable energy sector.
-              </p>
-            </div>
-          
+        <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl">
+          <h1 className="text-2xl font-bold mb-4 text-center">About Us</h1>
+          <p className="text-black text-center">
+            To address the societal focus on traditional career paths, EcoVent
+            proposes creating an Innovation Hub where students can bring,
+            develop, and showcase their innovative ideas. This Hub will nurture
+            young talent, encouraging entrepreneurial thinking in the field of
+            renewable energy and beyond.Through the EcoVent Innovation Hub,
+            students can break away from traditional career constraints, pursue
+            innovative projects, and potentially become entrepreneurs in the
+            green energy space. This initiative not only supports talent
+            development but also strengthens EcoVent’s mission to drive
+            sustainable change, creating a generation of empowered,
+            purpose-driven professionals.By positioning the EcoVent Innovation
+            Hub as a launchpad for green tech startups and a source of valuable
+            R&D, the company can generate profit while promoting sustainable
+            innovation and expanding its influence in the renewable energy
+            sector.
+          </p>
         </div>
+      </div>
     </div>
   );
 }
