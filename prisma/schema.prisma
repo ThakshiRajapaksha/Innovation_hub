@@ -1,0 +1,19 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "mysql"  // Change to 'postgresql' if you're using PostgreSQL
+  url      = env("DATABASE_URL")  // Connection URL from .env
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  name      String
+  email     String @unique
+  password  String
+  role      String
+  createdAt DateTime @default(now())
+}
