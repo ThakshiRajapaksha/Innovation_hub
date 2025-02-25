@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
 interface Project {
   id: string;
@@ -26,6 +26,8 @@ function CommonFeed() {
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<"feed" | "ads">("feed"); // State for tab switching
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // For handling modal visibility
+  const params = useParams();
+  const userId = params.id;
   const [newAd, setNewAd] = useState<Ad>({
     id: "",
     title: "",
@@ -72,6 +74,34 @@ function CommonFeed() {
     fetchProjects();
     fetchAds();
   }, []);
+
+  const handlePostClick = (id: string, type: "project") => {
+    console.log(userId);
+    if (!userId) {
+      console.error("User ID is undefined");
+      return;
+    }
+
+    if (type === "project") {
+      router.push(`/commonfeed/${userId}/project/${id}/comments`);
+    } else {
+      router.push(`/${type}/${id}`);
+    }
+  };
+
+  // Inside the map function for projects
+  {
+    projects.map((project) => (
+      <div
+        key={project.id}
+        className="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition"
+        onClick={() => userId && handlePostClick(project.id, "project")}
+      >
+        <h2 className="text-xl font-semibold text-gray-800">{project.title}</h2>
+        <p className="text-sm text-gray-600">{project.description}</p>
+      </div>
+    ));
+  }
 
   // Handle modal form change for new ad
   const handleAdChange = (
@@ -194,7 +224,14 @@ function CommonFeed() {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="bg-white shadow-lg rounded-lg p-6"
+                className="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition"
+                onClick={() => handlePostClick(project.id, "project")}
+                role="button" // Helps for accessibility
+                tabIndex={0} // Allows keyboard navigation
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && userId)
+                    handlePostClick(project.id, "project");
+                }}
               >
                 <h2 className="text-xl font-semibold text-gray-800">
                   {project.title}

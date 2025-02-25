@@ -17,7 +17,8 @@ model User {
   role      String
   createdAt DateTime  @default(now())
 
-  projects  Project[] // Relation to Project
+  projects  Project[] 
+  comments  Comment[] // Add relation to comments
 }
 
 model Project {
@@ -25,11 +26,12 @@ model Project {
   title       String
   description String
   department  String
-  imageUrl    String?  // Optional in case no image is uploaded
+  imageUrl    String?  
   userId      Int
   createdAt   DateTime @default(now())
 
-  user        User     @relation(fields: [userId], references: [id]) // Foreign key
+  user        User     @relation(fields: [userId], references: [id]) 
+  comments    Comment[] // Add relation to comments
 }
 
 model Ad {
@@ -38,4 +40,17 @@ model Ad {
   description String
   imageUrl    String?  // Optional field for an ad image
   createdAt   DateTime @default(now())
+}
+
+
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  projectId Int
+  userId    Int
+  createdAt DateTime @default(now())
+
+  project   Project @relation(fields: [projectId], references: [id]) // Fix relation
+  user      User    @relation(fields: [userId], references: [id]) // Fix relation
 }

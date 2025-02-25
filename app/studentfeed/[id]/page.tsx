@@ -81,7 +81,7 @@ function Feed() {
 
         // Adding a small delay before navigation
         setTimeout(() => {
-          router.push(`/studentfeed/${id}`); // Ensure redirection is dynamic
+          router.push(`/commonfeed/${id}`); // Ensure redirection is dynamic
         }, 500);
       } else {
         alert(data.error || "Failed to submit project.");
