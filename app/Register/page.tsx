@@ -43,22 +43,43 @@ const Register = () => {
       return;
     }
 
-    const res = await fetch("/api/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, role }),
-    });
+    console.log("Submitting data:", { name, email, password, role });
 
-    const data = await res.json();
-    alert(data.message || data.error);
-  };
-  const handleSignUpClick = () => {
-    router.push("/Register");
+    try {
+      const res = await fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role }),
+      });
+
+      const data = await res.json();
+
+      console.log("Response data:", data); // Debugging response
+
+      if (res.ok) {
+        alert(data.message || "Registration successful!");
+
+        // Instead of extracting user ID, use the redirectUrl provided in the response
+        const redirectUrl = data.redirectUrl;
+
+        if (!redirectUrl) {
+          alert("Redirect URL not found. Please try again.");
+          return;
+        }
+
+        console.log("Navigating to:", redirectUrl);
+
+        // Navigate to the dynamic route using redirectUrl
+        router.push(redirectUrl);
+      } else {
+        alert(data.error || "Something went wrong!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
-  const handleLoginClick = () => {
-    router.push("/Login");
-  };
   return (
     <div
       style={{
@@ -69,43 +90,32 @@ const Register = () => {
       }}
       className="flex w-full justify-center items-center p-6 overflow-auto"
     >
-
-    <header className="bg-white-800 p-6 fixed top-0 left-0 right-0 z-50 w-full">
-            <nav>
-              <ul className="flex items-center space-x-8 w-full">
-                <li>
-                  <Button variant="link" onClick={() => router.push("/")}>
-                    Home
-                  </Button>
-                </li>
-                <li>
-                  <Button variant="link" onClick={() => router.push("/about")}>
-                    About
-                  </Button>
-                </li>
-                <li>
-                  <Button variant="link" onClick={() => router.push("/services")}>
-                    Services
-                  </Button>
-                </li>
-                <li>
-                  <Button variant="link" onClick={() => router.push("/contact")}>
-                    Contact
-                  </Button>
-                </li>
-                <li>
-                  <Button variant="link" onClick={() => router.push("/feed")}>
-                    Feed
-                  </Button>
-                </li>
-    
-                {/* Login Button - Rightmost corner */}
-                <li className="ml-auto">
-                  <Button onClick={handleLoginClick}>Login</Button>
-                </li>
-              </ul>
-            </nav>
-          </header>
+      <header className="bg-white-800 p-5 fixed top-0 left-0 right-0 z-50 w-full">
+        <nav>
+          <ul className="flex items-center space-x-8 w-full">
+            <li>
+              <Button variant="link" onClick={() => router.push("/")}>
+                Home
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" onClick={() => router.push("/about")}>
+                About
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" onClick={() => router.push("/services")}>
+                Services
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" onClick={() => router.push("/contact")}>
+                Contact
+              </Button>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
       <div className="w-full max-w-lg p-4 bg-white rounded shadow-lg mt-4">
         <Card className="w-full">
@@ -173,7 +183,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <Button type="submit" className="">
+              <Button type="submit" className="han">
                 Register
               </Button>
             </form>

@@ -41,12 +41,6 @@ function Page() {
                 Contact
               </Button>
             </li>
-            <li>
-              <Button variant="link" onClick={() => router.push("/feed")}>
-                Feed
-              </Button>
-            </li>
-
             {/* Login Button - Rightmost corner */}
             <li className="ml-auto">
               <Button onClick={handleLoginClick}>Login</Button>

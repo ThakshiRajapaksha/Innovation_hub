@@ -25,18 +25,13 @@ const Login = () => {
     const data = await res.json();
     alert(data.message || data.error);
 
-    // If login is successful, navigate to the feed page
-    if (res.status === 200) {
-      router.push("/feed"); // Navigate to the feed page
+    // If login is successful, navigate based on the redirectUrl from the response
+    if (res.status === 200 && data.redirectUrl) {
+      router.push(data.redirectUrl); // Redirect to the appropriate feed page (either /feed or /studentfeed)
     }
   };
 
-  const handleLoginClick = () => {
-    router.push("/Login");
-  };
-
   return (
-    
     <div
       style={{
         backgroundImage: "url('/assets/home-bg.jpg')",
@@ -47,41 +42,31 @@ const Login = () => {
       className="flex w-full justify-center items-center p-6 overflow-auto"
     >
       <header className="bg-white-800 p-6 fixed top-0 left-0 right-0 z-50 w-full">
-              <nav>
-                <ul className="flex items-center space-x-8 w-full">
-                  <li>
-                    <Button variant="link" onClick={() => router.push("/")}>
-                      Home
-                    </Button>
-                  </li>
-                  <li>
-                    <Button variant="link" onClick={() => router.push("/about")}>
-                      About
-                    </Button>
-                  </li>
-                  <li>
-                    <Button variant="link" onClick={() => router.push("/services")}>
-                      Services
-                    </Button>
-                  </li>
-                  <li>
-                    <Button variant="link" onClick={() => router.push("/contact")}>
-                      Contact
-                    </Button>
-                  </li>
-                  <li>
-                    <Button variant="link" onClick={() => router.push("/feed")}>
-                      Feed
-                    </Button>
-                  </li>
-      
-                  {/* Login Button - Rightmost corner */}
-                  <li className="ml-auto">
-                    <Button onClick={handleLoginClick}>Login</Button>
-                  </li>
-                </ul>
-              </nav>
-            </header>
+        <nav>
+          <ul className="flex items-center space-x-8 w-full">
+            <li>
+              <Button variant="link" onClick={() => router.push("/")}>
+                Home
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" onClick={() => router.push("/about")}>
+                About
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" onClick={() => router.push("/services")}>
+                Services
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" onClick={() => router.push("/contact")}>
+                Contact
+              </Button>
+            </li>
+          </ul>
+        </nav>
+      </header>
       <div className="w-full max-w-lg p-4 bg-white rounded shadow-lg mt-4">
         <Card className="w-full">
           <CardHeader>
