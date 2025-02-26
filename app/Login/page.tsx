@@ -45,6 +45,15 @@ const Login = () => {
         <nav>
           <ul className="flex items-center space-x-8 w-full">
             <li>
+              <Button
+                variant="link"
+                onClick={() => router.back()}
+                className="text-2xl hover:text-gray-400 transition-colors"
+              >
+                ←
+              </Button>
+            </li>
+            <li>
               <Button variant="link" onClick={() => router.push("/")}>
                 Home
               </Button>

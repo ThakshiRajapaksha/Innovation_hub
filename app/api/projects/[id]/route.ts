@@ -8,9 +8,12 @@ export async function GET(
   try {
     const { id } = await params;
 
-    // Fetch project by ID
+    // Fetch project by ID, including the user relation
     const project = await prisma.project.findUnique({
       where: { id: Number(id) },
+      include: {
+        user: true, // Include the user relation
+      },
     });
 
     if (!project) {

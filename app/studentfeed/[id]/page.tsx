@@ -124,8 +124,10 @@ function Feed() {
       </header>
 
       {/* Form Section */}
-      <div className="flex justify-center items-center w-full">
-        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl backdrop-blur-md bg-opacity-90">
+      <div className="flex justify-center items-center w-full mt-20">
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl backdrop-blur-md bg-opacity-90 max-h-[80vh] overflow-y-auto">
+          {" "}
+          {/* Added max-h and overflow-y-auto */}
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
             Add Your Idea 💡
           </h1>
@@ -169,10 +171,16 @@ function Feed() {
                 required
               >
                 <option value="">Select a department</option>
-                <option value="civil">Civil Engineering</option>
-                <option value="mechanical">Mechanical Engineering</option>
-                <option value="electrical">Electrical Engineering</option>
-                <option value="computer">Computer Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Mechanical Engineering">
+                  Mechanical Engineering
+                </option>
+                <option value="Electrical & Electronic Engineering">
+                  Electrical & Electronic Engineering
+                </option>
+                <option value="Computer Engineering">
+                  Computer Engineering
+                </option>
               </select>
             </div>
 

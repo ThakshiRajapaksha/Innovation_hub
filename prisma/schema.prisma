@@ -24,7 +24,7 @@ model User {
 model Project {
   id          Int      @id @default(autoincrement())
   title       String
-  description String
+  description String   @db.LongText
   department  String
   imageUrl    String?  
   userId      Int
@@ -37,7 +37,7 @@ model Project {
 model Ad {
   id          Int      @id @default(autoincrement())
   title       String
-  description String
+  description String   @db.LongText
   imageUrl    String?  // Optional field for an ad image
   createdAt   DateTime @default(now())
 }
@@ -46,11 +46,11 @@ model Ad {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  content   String
-  projectId Int
+  content   String   @db.LongText
   userId    Int
+  projectId Int      // Add this line to fix the relation
   createdAt DateTime @default(now())
 
-  project   Project @relation(fields: [projectId], references: [id]) // Fix relation
-  user      User    @relation(fields: [userId], references: [id]) // Fix relation
+  project   Project @relation(fields: [projectId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
 }
