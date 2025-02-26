@@ -11,6 +11,9 @@ interface Project {
   department: string;
   imageUrl: string | File | null;
   createdAt: string;
+  user: {
+    name: string;
+  };
 }
 
 interface Ad {
@@ -22,6 +25,7 @@ interface Ad {
 
 function CommonFeed() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [ads, setAds] = useState<Ad[]>([]); // For ads
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<"feed" | "ads">("feed"); // State for tab switching
@@ -37,13 +41,32 @@ function CommonFeed() {
 
   const router = useRouter();
 
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        console.log("Fetching user role...");
+        const response = await fetch(`/api/users/${params.id}`);
+        const data = await response.json();
+        if (response.ok) {
+          setUserRole(data.role);
+          console.log("User role set:", data.role);
+        } else {
+          console.error("Error fetching user role:", data.error);
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+    fetchUserRole();
+  });
+
   // Fetching projects and ads data
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch("/api/projects"); // Adjust to your API endpoint
         const data = await response.json();
-
+        console.log("Projects data:", data); // Log the response data to inspect it
         if (response.ok) {
           setProjects(data.projects);
         } else {
@@ -60,7 +83,7 @@ function CommonFeed() {
       try {
         const response = await fetch("/api/ads"); // Adjust to your API endpoint for ads
         const data = await response.json();
-
+        console.log("Ads data:", data); // Log the ads data as well
         if (response.ok) {
           setAds(data.ads);
         } else {
@@ -97,7 +120,13 @@ function CommonFeed() {
         className="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition"
         onClick={() => userId && handlePostClick(project.id, "project")}
       >
-        <h2 className="text-xl font-semibold text-gray-800">{project.title}</h2>
+        <p className="text-sm text-gray-500 mb-2">
+          Owner: {project.user ? project.user.name : "Unknown"}
+        </p>
+        {/* Add "Title:" in front of the title */}
+        <h2 className="text-xl font-semibold text-gray-800">
+          Title: {project.title}
+        </h2>
         <p className="text-sm text-gray-600">{project.description}</p>
       </div>
     ));
@@ -202,6 +231,16 @@ function CommonFeed() {
         >
           Ads
         </Button>
+
+        {/* Show button if user is a student */}
+        {userRole === "STUDENT" && (
+          <Button
+            onClick={() => router.push(`/studentfeed/${userId}`)}
+            className="mb-6 bg-black text-white"
+          >
+            Add New Project
+          </Button>
+        )}
       </div>
 
       {/* News Feed or Ads Section */}
@@ -209,7 +248,7 @@ function CommonFeed() {
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           {activeTab === "feed" ? "Project News Feed 🚀" : "Advertisements 🛍️"}
           {/* Add New Ad Button (Visible for any user inside the 'ads' tab) */}
-          {activeTab === "ads" && (
+          {activeTab === "ads" && userRole === "ADMIN" && (
             <Button onClick={() => setIsModalOpen(true)} className="mt-6">
               Add New Ad
             </Button>
@@ -233,8 +272,11 @@ function CommonFeed() {
                     handlePostClick(project.id, "project");
                 }}
               >
+                <p className="text-sm text-gray-500 mb-2">
+                  Owner: {project.user ? project.user.name : "Unknown"}
+                </p>
                 <h2 className="text-xl font-semibold text-gray-800">
-                  {project.title}
+                  Title:{project.title}
                 </h2>
                 <p className="text-sm text-gray-600">{project.description}</p>
                 {project.imageUrl && (

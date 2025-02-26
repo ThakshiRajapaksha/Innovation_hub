@@ -10,6 +10,9 @@ interface Project {
   department: string;
   imageUrl: string;
   createdAt: string;
+  user?: {
+    name: string;
+  };
 }
 
 interface Comment {
@@ -118,7 +121,10 @@ export default function ProjectComments() {
         </nav>
       </header>
       <div className="max-w-2xl mx-auto p-6">
-        <h1 className="text-2xl font-bold">{project.title}</h1>
+        <p className="text-sm text-gray-500 mb-2">
+          Owner: {project.user ? project.user.name : "Unknown"}
+        </p>
+        <h1 className="text-2xl font-bold">Title:{project.title}</h1>
         <p className="text-gray-600">{project.description}</p>
         {project.imageUrl && (
           <img

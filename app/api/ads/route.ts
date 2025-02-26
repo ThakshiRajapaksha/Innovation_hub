@@ -62,8 +62,12 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    // Fetch all ads from the database
-    const ads = await prisma.ad.findMany();
+    // Fetch all ads from the database, sorted by updatedAt in descending order
+    const ads = await prisma.ad.findMany({
+      orderBy: {
+        createdAt: "desc", // Sort by createdAt in descending order
+      },
+    });
 
     // Respond with the fetched ads
     return NextResponse.json({ ads }, { status: 200 });

@@ -46,13 +46,17 @@ export async function POST(req: NextRequest) {
 // GET method: Fetch all projects
 export async function GET() {
   try {
-    // Fetch projects from the database, ordered by creation date
+    // Fetch projects from the database, ordered by creation date, and include the related user
     const projects = await prisma.project.findMany({
       orderBy: {
         createdAt: "desc", // Sort by createdAt in descending order (latest projects first)
       },
+      include: {
+        user: true, // Include the related user data (this will fetch user details for each project)
+      },
     });
 
+    // You can now access user name with project.user.name
     return NextResponse.json({ projects }, { status: 200 });
   } catch (error) {
     console.error("Error fetching projects:", error);

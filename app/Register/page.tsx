@@ -32,6 +32,7 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [role, setRole] = useState<string>(roles[0].value);
+  const [agree, setAgree] = useState<boolean>(false); // New state for agreement checkbox
   const router = useRouter(); // Initialize the useRouter hook
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,6 +41,12 @@ const Register = () => {
     // Check if passwords match
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
+      return;
+    }
+
+    // Check if the user agreed to the policies
+    if (!agree) {
+      alert("You must agree to the policies and laws!");
       return;
     }
 
@@ -94,6 +101,15 @@ const Register = () => {
         <nav>
           <ul className="flex items-center space-x-8 w-full">
             <li>
+              <Button
+                variant="link"
+                onClick={() => router.back()}
+                className="text-2xl hover:text-gray-400 transition-colors"
+              >
+                ←
+              </Button>
+            </li>
+            <li>
               <Button variant="link" onClick={() => router.push("/")}>
                 Home
               </Button>
@@ -117,7 +133,7 @@ const Register = () => {
         </nav>
       </header>
 
-      <div className="w-full max-w-lg p-4 bg-white rounded shadow-lg mt-4">
+      <div className="w-full max-w-lg p-4 bg-white rounded shadow-lg mt-24">
         <Card className="w-full">
           <CardHeader>
             <CardTitle className="text-center">Register</CardTitle>
@@ -182,6 +198,21 @@ const Register = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
+              </div>
+              <div className="flex items-center space-x-2">
+                <input
+                  id="agree"
+                  type="checkbox"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                  required
+                />
+                <Label htmlFor="agree" className="text-sm">
+                  I agree to the{" "}
+                  <a href="/terms" className="text-blue-500">
+                    Terms and Conditions, Privacy and Policy
+                  </a>{" "}
+                </Label>
               </div>
               <Button type="submit" className="han">
                 Register
