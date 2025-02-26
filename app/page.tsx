@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button"; // Assuming ShadCN Button component
 import { useRouter } from "next/navigation";
+import {motion} from "framer-motion";
 import "../styles/background.css";
 
 function Page() {
@@ -53,7 +54,41 @@ function Page() {
 
       {/* Content Section with Background Image */}
       <div className="background-container">
-        <Button onClick={handleSignUpClick}>Sign Up</Button>
+      <div className="background-container flex flex-col items-center justify-center min-h-screen text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-3xl md:text-8xl font-bold text-white mb-12"
+          style={{
+            WebkitTextStroke: "2px white", // Black outline for WebKit browsers
+            textShadow: "2px 2px 0 black, -2px -2px 0 black, -2px 2px 0 black, 2px -2px 0 black", // Cross-browser fallback
+          }}
+        >
+          Welcome to Innovation Hub
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="text-lg md:text-4xl text-black mb-20"
+        >
+        <div className="bg-white/40 p-6 rounded-lg shadow-lg backdrop-blur-md">
+          A platform for students to showcase their innovations to industry experts.
+        </div>
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1 }}
+        >
+          <Button onClick={handleSignUpClick} className="px-10 py-8 text-lg rounded-r-sm">
+            <div className="text-lg md:text-3xl text-white">
+              Sign Up
+            </div>
+          </Button>
+        </motion.div>
+      </div>
       </div>
     </div>
   );

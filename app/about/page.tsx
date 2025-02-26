@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button"; // Assuming ShadCN Button component
 import { useRouter } from "next/navigation";
 import "../../styles/background.css";
+import {motion} from "framer-motion";
 
 function About() {
   const router = useRouter();
@@ -48,6 +49,11 @@ function About() {
 
       {/* Content Section with Background Image */}
       <div className="background-container">
+        <motion.h1
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
+                >
         <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl"
         style={{
           backdropFilter: "blur(20px)",
@@ -73,6 +79,7 @@ function About() {
             sector.
           </p>
         </div>
+      </motion.h1> 
       </div>
     </div>
   );
