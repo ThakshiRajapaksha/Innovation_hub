@@ -15,6 +15,7 @@ function Page() {
     router.push("/Login");
   };
 
+
   return (
     <div className="relative min-h-screen">
       {/* Navbar */}
@@ -45,6 +46,7 @@ function Page() {
             <li className="ml-auto">
               <Button onClick={handleLoginClick}>Login</Button>
             </li>
+            
           </ul>
         </nav>
       </header>

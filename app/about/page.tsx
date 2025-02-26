@@ -48,7 +48,12 @@ function About() {
 
       {/* Content Section with Background Image */}
       <div className="background-container">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl">
+        <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl"
+        style={{
+          backdropFilter: "blur(20px)",
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+        }}
+        >
           <h1 className="text-2xl font-bold mb-4 text-center">About Us</h1>
           <p className="text-black text-center">
             To address the societal focus on traditional career paths, EcoVent

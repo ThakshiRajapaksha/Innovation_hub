@@ -49,7 +49,12 @@ function Contact() {
       {/* Content Section with Background Image */}
       <div className="background-container">
         <div className="background-container flex flex-col items-center justify-center min-h-screen pt-24">
-          <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl mb-8">
+          <div className="bg-white rounded-lg shadow-lg p-8 w-3/4 max-w-xl mb-8"
+          style={{
+            backdropFilter: "blur(20px)",
+            backgroundColor: "rgba(255, 255, 255, 0.7)",
+          }}
+          >
             <h1 className="text-2xl font-bold mb-4 text-center">Contact Us</h1>
             <p className="text-black text-center mb-6">
               <b>Give us a call:</b> 0771234566 or (011)2815364
