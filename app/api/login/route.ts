@@ -31,8 +31,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid password" }, { status: 400 });
     }
 
-    // Return success (You can return a JWT or user data here if needed)
-    return NextResponse.json({ message: "Login successful" }, { status: 200 });
+    // Determine the redirect URL based on role
+    let redirectUrl = `/commonfeed/${user.id}`; // Default redirect for non-students
+
+    if (user.role === "student") {
+      redirectUrl = `/studentfeed/${user.id}`; // Redirect for students
+    }
+
+    // Return success with redirect URL including user ID
+    return NextResponse.json(
+      { message: "Login successful", redirectUrl },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Error in Login" }, { status: 500 });

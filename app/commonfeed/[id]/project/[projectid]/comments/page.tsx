@@ -1,0 +1,137 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  department: string;
+  imageUrl: string;
+  createdAt: string;
+}
+
+interface Comment {
+  id: string;
+  content: string;
+  createdAt: string;
+}
+
+export default function ProjectComments() {
+  const { id } = useParams(); // Get project ID from URL
+  const [project, setProject] = useState<Project | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState("");
+
+  // Fetch project details
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const res = await fetch(`/api/projects/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProject(data.project);
+        } else {
+          console.error("Failed to fetch project data");
+        }
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      }
+    };
+
+    const fetchComments = async () => {
+      try {
+        const res = await fetch(`/api/projects/${id}/comments`);
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data.comments);
+        } else {
+          console.error("Failed to fetch comments");
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchProject();
+    fetchComments();
+  }, [id]);
+
+  // Handle adding a new comment
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+
+    try {
+      const res = await fetch(`/api/projects/${id}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: newComment }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setComments([...comments, data.comment]); // Add new comment to list
+        setNewComment(""); // Clear input
+      } else {
+        console.error("Failed to add comment");
+      }
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  };
+
+  if (!project) return <p className="text-gray-500">Loading project...</p>;
+
+  return (
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-2xl font-bold">{project.title}</h1>
+      <p className="text-gray-600">{project.description}</p>
+      {project.imageUrl && (
+        <img
+          src={project.imageUrl}
+          alt={project.title}
+          className="w-full h-auto rounded-lg mt-4"
+        />
+      )}
+      <p className="text-sm text-gray-500">Department: {project.department}</p>
+      <p className="text-xs text-gray-400">
+        Created at: {new Date(project.createdAt).toLocaleString()}
+      </p>
+
+      {/* Comments Section */}
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold">Comments</h2>
+        <div className="space-y-4 mt-4">
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <div key={comment.id} className="bg-gray-100 p-4 rounded-lg">
+                <p className="text-gray-700">{comment.content}</p>
+                <p className="text-xs text-gray-500">
+                  {new Date(comment.createdAt).toLocaleString()}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No comments yet.</p>
+          )}
+        </div>
+
+        {/* Add Comment Form */}
+        <div className="mt-4">
+          <textarea
+            className="w-full p-2 border rounded"
+            placeholder="Add a comment..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          ></textarea>
+          <Button onClick={handleAddComment} className="mt-2">
+            Submit
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}

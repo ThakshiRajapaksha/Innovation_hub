@@ -10,10 +10,32 @@ generator client {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String @unique
+  email     String    @unique
   password  String
   role      String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+
+  projects  Project[] // Relation to Project
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  department  String
+  imageUrl    String?  // Optional in case no image is uploaded
+  userId      Int
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id]) // Foreign key
+}
+
+model Ad {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  imageUrl    String?  // Optional field for an ad image
+  createdAt   DateTime @default(now())
 }
